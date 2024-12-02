@@ -1,10 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
-
+import Login from './components/auth/login';
+import Profile from './components/profile';
+import Register from './components/auth/register';
+import { Route, Routes } from "react-router-dom";
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
@@ -17,7 +20,14 @@ function App() {
         >
           Learn React
         </a>
-      </header>
+      </header> */}
+
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="login" element={<Login/>} />
+        <Route path="register" element={<Register/>}/>
+      </Routes>
     </div>
   );
 }
