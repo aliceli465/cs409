@@ -56,23 +56,27 @@ function App() {
 
   return (
     <div className="App">
-      <h1 className="greeting">Hello, xyz!</h1>
-      <img
-        src="/images/small-image.jpg"
-        alt="Small"
-        className="small-image"
-        onClick={handleImageClick}
-      />
-      <div className="center-content">
+      {/* <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header> */}
 
-        <label className="upload-button">
-          Upload Files
-          <input type="file" onChange={handleFileUpload} />
-        </label>
-      </div>
-      <div className="image-container">
-        <img src="/images/large-image.jpg" alt="Large" className="large-image" />
-      </div>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="login" element={<Login/>} />
+        <Route path="register" element={<Register/>}/>
+      </Routes>
     </div>
   );
 }
