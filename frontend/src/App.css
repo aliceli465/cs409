@@ -1,38 +1,146 @@
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+  position: relative;
   min-height: 100vh;
+  background-color: black;
+  color: white;
+  font-family: Arial, sans-serif;
+  flex-direction: column;
+}
+.greeting {
+  position: absolute;
+  top: 10px;
+  left: 5vmin;
+  font-size: calc(10px + 10vmin);
+}
+.greeting2 {
+  position: absolute;
+  top: 10px;
+  text-align:center;
+  font-size: calc(10px + 6vmin);
+}
+.parent-container {
+  display: flex; 
+  gap: 20px; 
+}
+.text-box-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; 
+}
+.text-box-container2 {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; 
+  margin-left:auto
+  
+}
+
+.text-box {
+  width: 200px; 
+  padding: 10px;
+  text-align: center; 
+  border: 2px solid #333; 
+  border-radius: 8px; 
+  background: linear-gradient(to right, purple, blue);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+
+}
+.text-box2 {
+  text-align:right;
+  width: 200px; 
+  padding: 10px;
+  right: 0px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+
+}
+
+.profileinfo{
+  position: absolute;
+  left:4vmin;
+  top: 30vmin;
+  font-size: calc(10px + 3vmin);
+  font-style: italic;
+  font-weight:bold;
+}
+.profileinfo2{
+  position: absolute;
+  left:4vmin;
+  top: 40vmin;
+  font-size: calc(5px + 2vmin);
+  font-style: italic;
+
+}
+.small-image {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 50px;
+  height: auto;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.small-image2 {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 50px;
+  height: auto;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.center-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  height: 60vh; 
+  text-align: center;
+}
+
+
+.upload-button {
+  background: linear-gradient(to right, purple, blue);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.upload-button input {
+  display: none;
+}
+.large-image {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  display: block;
+  margin: 20px auto;
+  align-items:center;
+  justify-content:center;
+}
+.new-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: black;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+button {
+  margin-top: 40px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
 }

@@ -1,0 +1,14 @@
+<<<<<<< HEAD
+env
+.env
+=======
+.DS_Store
+.idea/
+.idea/*
+.vs_code/
+.vs_code/*
+node_modules
+node_modules/*
+public/
+public/*
+>>>>>>> 81817af8f7ce49e492d2a4bed110d9620b09cbfe
