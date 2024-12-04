@@ -1,7 +1,7 @@
 import React from "react";
 import { Tree, NodeModel } from "react-d3-tree";
 
-// Sample data (the dependency tree)
+//example data
 const dependencyTree = {
   name: "main",
   children: [
@@ -39,7 +39,6 @@ const dependencyTree = {
 };
 
 const DependencyGraph = () => {
-  // Define the styles for nodes
   const nodeSize = { x: 200, y: 100 };
 
   const renderCustomNode = ({ nodeData }) => {
@@ -59,7 +58,7 @@ const DependencyGraph = () => {
         data={dependencyTree}
         renderCustomNode={renderCustomNode}
         nodeSize={nodeSize}
-        translate={{ x: 400, y: 50 }} // Adjust the position as needed
+        translate={{ x: 400, y: 50 }}
       />
     </div>
   );

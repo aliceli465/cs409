@@ -2,14 +2,15 @@ import React, { useState, useRef } from "react";
 
 const FunctionBubble = ({ functionName, explanation, color }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const bubbleRef = useRef(null); // Ref to access the bubble DOM element
-  const [dropdownWidth, setDropdownWidth] = useState(0); // State to hold dropdown width
+  const bubbleRef = useRef(null);
+  const [dropdownWidth, setDropdownWidth] = useState(0);
 
+  //get bubble width
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
     if (!isOpen && bubbleRef.current) {
-      const bubbleWidth = bubbleRef.current.getBoundingClientRect().width; // Get bubble width
-      setDropdownWidth(bubbleWidth); // Set dropdown width
+      const bubbleWidth = bubbleRef.current.getBoundingClientRect().width;
+      setDropdownWidth(bubbleWidth);
     }
   };
 
@@ -18,18 +19,18 @@ const FunctionBubble = ({ functionName, explanation, color }) => {
       <div
         className="function-bubble"
         onClick={toggleDropdown}
-        ref={bubbleRef} // Attach ref to the bubble
-        style={{ backgroundColor: color }} // Set the background color from the prop
+        ref={bubbleRef}
+        style={{ backgroundColor: color }}
       >
         {functionName}
         {isOpen && (
           <div
             className={`dropdown ${isOpen ? "show" : ""}`}
             style={{
-              width: `${dropdownWidth}px`, // Set dropdown width
+              width: `${dropdownWidth}px`,
               position: "relative",
-              top: "100%", // Position below the bubble
-              zIndex: 1, // Ensure it appears above other elements
+              top: "100%",
+              zIndex: 1,
             }}
           >
             <p style={{ whiteSpace: "pre-wrap" }}>{explanation}</p>

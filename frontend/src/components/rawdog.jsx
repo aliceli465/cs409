@@ -5,18 +5,17 @@ const SimpleVscodeEditor = ({ code }) => {
   const editorRef = useRef(null);
   const monacoRef = useRef(null);
 
-  // This function is called when the editor mounts
+  //mount then dkeep reference to the editor
   const handleEditorDidMount = (editor, monaco) => {
-    editorRef.current = editor; // Keep a reference to the editor
-    monacoRef.current = monaco; // Keep a reference to monaco
+    editorRef.current = editor;
+    monacoRef.current = monaco;
   };
 
   useEffect(() => {
-    // Optionally, you can perform actions when code changes
     if (editorRef.current) {
-      editorRef.current.setValue(code); // Update the editor value
+      editorRef.current.setValue(code);
     }
-  }, [code]); // Listen to changes in code
+  }, [code]);
 
   return (
     <div
@@ -28,18 +27,18 @@ const SimpleVscodeEditor = ({ code }) => {
     >
       <Editor
         height="100%"
-        defaultLanguage="plaintext" // Use plaintext for raw string
-        value={code} // Set the initial value
+        defaultLanguage="plaintext"
+        value={code}
         theme="vs-dark"
         options={{
-          readOnly: true, // Set to true if you want it to be read-only
+          readOnly: true,
           fontFamily: "Fira Code, monospace",
           fontSize: 14,
           scrollBeyondLastLine: false,
           minimap: { enabled: false },
           lineNumbers: "on",
         }}
-        onMount={handleEditorDidMount} // Mount the editor and pass references
+        onMount={handleEditorDidMount}
       />
     </div>
   );

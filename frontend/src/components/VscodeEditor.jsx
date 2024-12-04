@@ -39,33 +39,29 @@ const VscodeEditor = ({ code, onFunctionDetailsChange, functionData }) => {
     "#FFE7D3", // light orange
   ];
 
-  // Set to keep track of visited colors
   const visitedColors = new Set();
 
-  // Function to get a random color from the color pool that hasn't been used
   const getRandomColor = () => {
     if (visitedColors.size >= colorPool.length) {
-      // If all colors have been used, you might want to reset or handle it
+      //reset colors if they have all been used
       console.warn("All colors have been used. Resetting color pool.");
-      visitedColors.clear(); // Reset the visited set if all colors are used
+      visitedColors.clear();
     }
 
     let randomColor;
     do {
       const randomIndex = Math.floor(Math.random() * colorPool.length);
       randomColor = colorPool[randomIndex];
-    } while (visitedColors.has(randomColor)); // Ensure the color hasn't been used
+    } while (visitedColors.has(randomColor));
 
-    // Mark the color as visited
     visitedColors.add(randomColor);
     return randomColor;
   };
 
   const extractFunctionRanges = (functionData, monaco) => {
     const decorations = [];
-    const functionDetails = []; // Array to hold function details
+    const functionDetails = [];
 
-    // Remove existing styles for previous highlights
     const existingStyles = document.querySelectorAll(
       ".function-highlight-style"
     );
@@ -73,62 +69,52 @@ const VscodeEditor = ({ code, onFunctionDetailsChange, functionData }) => {
       existingStyles.forEach((style) => style.remove());
     }
 
-    // Iterate over functionData to create decorations
     functionData.forEach((func, index) => {
-      const color = getRandomColor(); // Get a random color for this function
-      const className = `highlight-code-${index}`; // Unique class for this function
+      const color = getRandomColor();
+      const className = `highlight-code-${index}`;
 
-      var bounds = findFunctionBounds(code, extractFunctionName(func.func_signature))
-      console.log("The name: " + extractFunctionName(func.func_signature))
-      console.log("The bounds: " + bounds.start + " and " + bounds.end)
+      var bounds = findFunctionBounds(
+        code,
+        extractFunctionName(func.func_signature)
+      );
+      console.log("The name: " + extractFunctionName(func.func_signature));
+      console.log("The bounds: " + bounds.start + " and " + bounds.end);
 
-      // Create the decoration for the function
       decorations.push({
-        range: new monaco.Range(
-          bounds.start,
-          1,
-          bounds.end + 1,
-          1
-        ),
+        range: new monaco.Range(bounds.start, 1, bounds.end + 1, 1),
         options: {
-          inlineClassName: className, // Apply a unique class for this function
+          inlineClassName: className,
           isWholeLine: true,
         },
       });
 
-      // Add a dynamic style for function highlighting
       const styleTag = document.createElement("style");
-      styleTag.className = "function-highlight-style"; // To identify these styles later
+      styleTag.className = "function-highlight-style";
       styleTag.innerHTML = `
         .${className} { background-color: ${color}; color: #000000 !important; }
       `;
       document.head.appendChild(styleTag);
 
-      // Push the function details into the array
       functionDetails.push({
-        name: func.func_signature, // Extract function name from signature
-        src: func.func_body_wo_brackets, // Assuming this is the source code without brackets
+        name: func.func_signature,
+        src: func.func_body_wo_brackets,
         color: color,
       });
     });
 
-    return { decorations, functionDetails }; // Return both decorations and function details
+    return { decorations, functionDetails };
   };
 
-  // Function to apply highlights and return function details
   const highlightCode = (editor, monaco, functionData) => {
-    const model = editor.getModel(); // Get the model from the editor
+    const model = editor.getModel();
 
-    // Clear existing decorations
     editor.deltaDecorations([], []);
 
-    // Extract function ranges and apply highlights
     const { decorations, functionDetails } = extractFunctionRanges(
       functionData,
       monaco
     );
     decorations.forEach((decoration) => {
-      // Add the decoration for the function
       editor.deltaDecorations([], [decoration]);
     });
 
@@ -136,11 +122,10 @@ const VscodeEditor = ({ code, onFunctionDetailsChange, functionData }) => {
   };
 
   useEffect(() => {
-    // Apply highlights whenever code changes
     if (editorRef.current && monacoRef.current) {
       highlightCode(editorRef.current, monacoRef.current, functionData);
     }
-  }, [code, functionData]); // Listen to changes in code
+  }, [code, functionData]);
 
   return (
     <div style={{ height: "90vh", width: "100%", backgroundColor: "#1E1E1E" }}>
@@ -157,60 +142,55 @@ const VscodeEditor = ({ code, onFunctionDetailsChange, functionData }) => {
           minimap: { enabled: false },
           lineNumbers: "on",
         }}
-        onMount={handleEditorDidMount} // Mount the editor and pass references
+        onMount={handleEditorDidMount}
       />
     </div>
   );
 };
 
+//more weays to extarct functions from c file, tentative for now. don't necessarily need to keep highlgiht funcitonality
+
 function findFunctionBounds(code, functionName) {
-    // Split the code into an array of lines
-    const lines = code.split('\n');
+  const lines = code.split("\n");
 
-    // Regex pattern to match the function signature
-    const pattern = new RegExp(`\\b${functionName}\\s*\\([^)]*\\)\\s*\\{`);
+  const pattern = new RegExp(`\\b${functionName}\\s*\\([^)]*\\)\\s*\\{`);
 
-    let startLine = null;
-    let endLine = null;
-    let braceCount = 0;
+  let startLine = null;
+  let endLine = null;
+  let braceCount = 0;
 
-    // Iterate over each line to find the start and end lines
-    for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
 
-        // Check if the line contains the function declaration
-        if (startLine === null && pattern.test(line)) {
-            startLine = i + 1;  // Line numbers are 1-based, so add 1
-            braceCount = (line.match(/\{/g) || []).length - (line.match(/\}/g) || []).length;
-        } else if (startLine !== null) {
-            // If we've already found the function start, track braces
-            braceCount += (line.match(/\{/g) || []).length;
-            braceCount -= (line.match(/\}/g) || []).length;
+    if (startLine === null && pattern.test(line)) {
+      startLine = i + 1;
+      braceCount =
+        (line.match(/\{/g) || []).length - (line.match(/\}/g) || []).length;
+    } else if (startLine !== null) {
+      braceCount += (line.match(/\{/g) || []).length;
+      braceCount -= (line.match(/\}/g) || []).length;
 
-            // If brace count reaches 0, we've found the end of the function
-            if (braceCount === 0) {
-                endLine = i + 1;  // Line numbers are 1-based, so add 1
-                break;
-            }
-        }
+      if (braceCount === 0) {
+        endLine = i + 1;
+        break;
+      }
     }
+  }
 
-    // If the function is found, return the start and end line numbers
-    if (startLine !== null && endLine !== null) {
-        return {
-            start: startLine,
-            end: endLine
-        };
-    }
+  if (startLine !== null && endLine !== null) {
+    return {
+      start: startLine,
+      end: endLine,
+    };
+  }
 
-    return null;  // Function not found
+  return null;
 }
 
 function extractFunctionName(signature) {
-    // Regular expression to match the function name, ignoring pointer symbols
-    const regex = /(?:[^\s*]*\s+)*([^\s(*]+)\s*\(/; // Matches return type and captures the function name without pointer symbols
-    const match = signature.match(regex);
-    return match ? match[1] : null; // Return the function name or null if not found
+  const regex = /(?:[^\s*]*\s+)*([^\s(*]+)\s*\(/;
+  const match = signature.match(regex);
+  return match ? match[1] : null;
 }
 
 export default VscodeEditor;
