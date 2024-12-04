@@ -1,5 +1,6 @@
 
 
+
 import React, { useState } from 'react';
 import './App.css';
 import Login from './components/auth/login';
@@ -33,6 +34,7 @@ function App() {
         <Route path="login" element={<Login/>} />
         <Route path="register" element={<Register/>}/>
       </Routes>
+
     </div>
   );
 }
