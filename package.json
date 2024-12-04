@@ -1,0 +1,30 @@
+{
+  "name": "mp3_starter_19",
+  "version": "1.0.0",
+  "description": "MP3 Starter for CS498RK Spring 2019",
+  "authors": [
+    "James Lee <jwlee11@illinois.edu>",
+    "Sujay Khandekar <khandek2@illinois.edu>"
+  ],
+  "scripts": {
+    "start": "nodemon --exec node server.js"
+  },
+  "babel": {
+    "presets": [
+      "env",
+      "react"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uiuc-web-programming/mp3_starter_17.git"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "express": "^4.21.1",
+    "mongodb": "^6.10.0",
+    "mongoose": "^8.8.3",
+    "mp3_starter_19": "file:",
+    "nodemon": "^1.11.0"
+  }
+}
