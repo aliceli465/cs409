@@ -50,9 +50,10 @@ def build_function_dependency_graph_from_file(file_name):
 
     return dict(dependency_graph)
 
-# file_name = r"C:\Users\nisha\Downloads\example.c"  # Replace with your file name
+# file_name = r"C:\Users\Namea\OneDrive\Desktop\cs409\camelCaser.c"  # Replace with your file name
 # dependency_graph = build_function_dependency_graph_from_file(file_name)
 
+# print(dependency_graph.items())
 # # Print the dependency graph
 # print("Function Dependency Graph:")
 # for func, calls in dependency_graph.items():

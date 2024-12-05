@@ -67,7 +67,7 @@ const HomeComponent = () => {
           {/* Buttons */}
           <div className="flex space-x-4 mb-8">
             <button className="bg-purple-500 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition">
-              Declaration
+              Documentation
             </button>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition">
               Dependency Graph

@@ -11,6 +11,7 @@ const Profile = () => {
   const goBack = () => {
     navigate("/home"); // Navigate to the login page
   };
+
   const fetchUserData = async () => {
     try {
       const user = auth.currentUser; // Use auth.currentUser directly
