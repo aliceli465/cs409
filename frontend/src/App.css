@@ -1,4 +1,3 @@
-
 .App {
   position: relative;
   min-height: 100vh;
@@ -16,64 +15,61 @@
 .greeting2 {
   position: absolute;
   top: 10px;
-  text-align:center;
+  text-align: center;
   font-size: calc(10px + 6vmin);
 }
 .parent-container {
-  display: flex; 
-  gap: 20px; 
+  display: flex;
+  gap: 20px;
+  margin-top: 100px;
 }
 .text-box-container {
   display: flex;
   flex-direction: column;
-  gap: 20px; 
+  gap: 20px;
 }
 .text-box-container2 {
   display: flex;
   flex-direction: column;
-  gap: 20px; 
-  margin-left:auto
-  
+  gap: 20px;
+  margin-left: auto;
 }
 
 .text-box {
-  width: 200px; 
+  width: 200px;
   padding: 10px;
-  text-align: center; 
-  border: 2px solid #333; 
-  border-radius: 8px; 
+  text-align: center;
+  border: 2px solid #333;
+  border-radius: 8px;
   background: linear-gradient(to right, purple, blue);
   color: white;
   font-size: 16px;
   font-weight: bold;
-
 }
 .text-box2 {
-  text-align:right;
-  width: 200px; 
+  text-align: right;
+  width: 200px;
   padding: 10px;
   right: 0px;
   color: white;
   font-size: 16px;
   font-weight: bold;
-
 }
 
-.profileinfo{
+.profileinfo {
   position: absolute;
-  left:4vmin;
+  left: 4vmin;
   top: 30vmin;
   font-size: calc(10px + 3vmin);
   font-style: italic;
-  font-weight:bold;
+  font-weight: bold;
 }
-.profileinfo2{
+.profileinfo2 {
   position: absolute;
-  left:4vmin;
+  left: 4vmin;
   top: 40vmin;
   font-size: calc(5px + 2vmin);
   font-style: italic;
-
 }
 .small-image {
   position: absolute;
@@ -100,10 +96,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 60vh; 
+  height: 30vh;
   text-align: center;
 }
-
 
 .upload-button {
   background: linear-gradient(to right, purple, blue);
@@ -125,8 +120,8 @@
   height: auto;
   display: block;
   margin: 20px auto;
-  align-items:center;
-  justify-content:center;
+  align-items: center;
+  justify-content: center;
 }
 .new-screen {
   display: flex;

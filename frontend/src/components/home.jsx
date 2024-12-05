@@ -1,76 +1,62 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Editor from "@monaco-editor/react";
 
-import React, { useState } from "react";
-import "./App.css";
+import "../App.css";
 
-const homeComponent = () => {
-  const [showScreen, setShowScreen] = useState(false);
-  const [uploadedFileName, setUploadedFileName] = useState("");
-
-  const handleImageClick = () => {
-    setShowScreen(true);
-  };
+const HomeComponent = () => {
+  const navigate = useNavigate();
+  const [code, setCode] = useState(""); // State to store the code from the uploaded file
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
-    if (file) {
-      console.log("Uploaded file:", file.name);
-      setUploadedFileName(file.name);
+    if (file && file.name.endsWith(".c")) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setCode(e.target.result);
+      };
+      reader.readAsText(file);
+    } else {
+      alert("Please upload a valid .c file!");
     }
   };
 
-  return showScreen ? (
-    <div className="new-screen">
-      <h1 className="greeting2">Past Uploads</h1>
-      <img src="assets/icon.jpg" alt="sm" className="small-image2" />
-      <p className="profileinfo">
-        Alice Li <br />
-      </p>
-      <p className="profileinfo2">
-        <strong>username:</strong> alice_li409 <br />
-        <strong>email: </strong> alice_li409@illinois.edu
-      </p>
-      <div className="parent-container">
-        <div className="text-box-container">
-          <div className="text-box">file1.c</div>
-          <div className="text-box">file2.c</div>
-          <div className="text-box">file3.c</div>
-          <div className="text-box">file4.c</div>
-        </div>
-        <div className="text-box-container2">
-          <div className="text-box2">Score: 1/10</div>
-          <div className="text-box2">Score: 5/10</div>
-          <div className="text-box2">Score: 7/10</div>
-          <div className="text-box2">Score: 2/10</div>
-        </div>
-      </div>
-      <button onClick={() => setShowScreen(false)}>Go Back</button>
-    </div>
-  ) : (
+  const goProfile = () => {
+    navigate("/profile"); // Navigate to the login page
+  };
+
+  return (
     <div className="App">
-      <h1 className="greeting">Hello, xyz!</h1>
+      <h1 className="greeting">Welcome!</h1>
       <img
-        src="/images/small-image.jpg"
+        src="/profile.png"
         alt="Small"
         className="small-image"
-        onClick={handleImageClick}
+        onClick={goProfile}
       />
       <div className="center-content">
         <label className="upload-button">
-          Upload Files
-          <input type="file" onChange={handleFileUpload} />
+          Upload a file
+          <input
+            type="file"
+            accept=".c"
+            style={{ display: "none" }}
+            onChange={handleFileUpload}
+          />
         </label>
       </div>
-      <div className="image-container">
-        <img
-          src="/images/large-image.jpg"
-          alt="Large"
-          className="large-image"
+      <div className="mt-6 w-1/2 flex justify-center items-center mx-auto">
+        <Editor
+          height="800px"
+          defaultLanguage="c"
+          theme="vs-dark"
+          value={code}
+          onChange={(newCode) => setCode(newCode)} // Update code state as user edits
         />
       </div>
     </div>
   );
 };
 
-export default homeComponent;
+export default HomeComponent;
