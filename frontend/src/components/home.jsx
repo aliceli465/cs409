@@ -8,6 +8,7 @@ import "../App.css";
 const HomeComponent = () => {
   const navigate = useNavigate();
   const [code, setCode] = useState(""); // State to store the code from the uploaded file
+  const [results, setResults] = useState(false);
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -17,6 +18,7 @@ const HomeComponent = () => {
         setCode(e.target.result);
       };
       reader.readAsText(file);
+      setResults(true);
     } else {
       alert("Please upload a valid .c file!");
     }
@@ -55,6 +57,34 @@ const HomeComponent = () => {
           onChange={(newCode) => setCode(newCode)} // Update code state as user edits
         />
       </div>
+
+      {results && (
+        <div className="min-h-screen bg-black text-white flex flex-col items-center justify-start py-8">
+          {/* Title and Subtitle */}
+          <h1 className="text-3xl font-bold mb-2">Results</h1>
+          <p className="text-lg">Click each tab for more info</p>
+
+          {/* Buttons */}
+          <div className="flex space-x-4 mb-8">
+            <button className="bg-purple-500 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition">
+              Declaration
+            </button>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition">
+              Dependency Graph
+            </button>
+            <button className="bg-pink-500 hover:bg-pink-700 text-white font-semibold py-2 px-4 rounded-lg transition">
+              Optimization
+            </button>
+          </div>
+
+          {/* Content Box */}
+          <div className="bg-white text-black w-3/4 h-96 rounded-lg shadow-md p-4">
+            <p className="text-lg text-gray-500">
+              Select a tab to view content.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
