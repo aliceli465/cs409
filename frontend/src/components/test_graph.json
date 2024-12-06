@@ -1,0 +1,6 @@
+{
+  "printf_hello": [],
+  "is_prime": [],
+  "fibonacci": [],
+  "main": ["printf_hello", "is_prime", "fibonacci"]
+}

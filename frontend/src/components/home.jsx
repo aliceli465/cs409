@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 
 import Editor from "@monaco-editor/react";
 import FunctionBubble from "./FunctionBubble";
+import DependencyGraph from "./dependencyGraph";
 
 import "../App.css";
 
+//sample format for openai calls for documentaiton
 const functionNames = [
   "initApp",
   "handleClick",
@@ -21,6 +23,20 @@ const explanations = [
   "Processes the fetched data and prepares it for rendering.",
   "Renders the UI by mapping over data and applying appropriate components.",
 ];
+
+const feedback = Array(5).fill(
+  `This function works as intended but could use better error handling. Consider refactoring to reduce cyclomatic complexity.`
+);
+
+//IMPORTANT
+//COMBINE ALL THREE
+//TO MAKE OPTIMIZATION TAB
+const combinedArray = functionNames.map((functionName, index) => ({
+  function: functionName,
+  explanation: explanations[index],
+  feedback: feedback[index],
+}));
+
 const HomeComponent = () => {
   const navigate = useNavigate();
   const [code, setCode] = useState(""); // State to store the code from the uploaded file
@@ -108,7 +124,7 @@ const HomeComponent = () => {
           </div>
 
           {/* Content Box */}
-          <div className="bg-white text-black w-1/2 min-h-[200px] rounded-lg shadow-md p-4 flex flex-col items-center justify-center space-y-4">
+          <div className="bg-white text-black w-fit min-h-[200px] rounded-lg shadow-md p-4 flex flex-col items-center justify-center space-y-4">
             {activeTab === "documentation" && (
               <>
                 {functionNames.map((functionName, index) => (
@@ -124,15 +140,50 @@ const HomeComponent = () => {
 
             {activeTab === "dependencyGraph" && (
               <div className="text-center">
-                <h2 className="text-xl font-semibold">
-                  Dependency Graph Content
-                </h2>
+                <DependencyGraph />
               </div>
             )}
 
             {activeTab === "optimization" && (
-              <div className="text-center">
-                <h2 className="text-xl font-semibold">Optimization Tips</h2>
+              <div
+                style={{
+                  display: "flex",
+                  height: "100vh",
+                }}
+              >
+                <div
+                  style={{
+                    width: "40%",
+                    padding: "1rem",
+                    overflowY: "scroll",
+                    marginRight: "50px",
+                  }}
+                >
+                  {combinedArray.map((item, index) => (
+                    <div
+                      key={index}
+                      style={{
+                        marginBottom: "1rem",
+                        border: "1px solid #ccc",
+                        borderRadius: "8px",
+                        padding: "1rem",
+                        backgroundColor: "#f9f9f9",
+                      }}
+                    >
+                      <h2 className="font-bold">{item.function}</h2>
+                      <ul>
+                        <li>{item.feedback}</li>
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+                <Editor
+                  height="100%"
+                  width="850px"
+                  defaultLanguage="c"
+                  theme="vs-dark"
+                  value={code}
+                />
               </div>
             )}
           </div>

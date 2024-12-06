@@ -1,64 +1,47 @@
-import React from "react";
-import { Tree, NodeModel } from "react-d3-tree";
+import React, { useState, useEffect } from "react";
+import { Tree } from "react-d3-tree";
+import exampleGraph from "./test_graph.json";
+//example output for test.c
+//dict_items([('printf_hello', []), ('is_prime', []), ('fibonacci', []), ('main', ['printf_hello', 'is_prime'])])
+//example data in test_Graph.json
 
-//example data
-const dependencyTree = {
-  name: "main",
-  children: [
-    {
-      name: "waste_time",
-      children: [
-        {
-          name: "printf",
-          children: [],
-        },
-      ],
-    },
-    {
-      name: "is_prime",
-      children: [],
-    },
-    {
-      name: "fibonacci",
-      children: [
-        {
-          name: "fibonacci...",
-          children: [],
-        },
-      ],
-    },
-    {
-      name: "printf",
-      children: [],
-    },
-    {
-      name: "slow_multiply",
-      children: [],
-    },
-  ],
+const transformDependencyGraph = (graph) => {
+  const createNode = (func) => ({
+    name: func,
+    children: (graph[func] || []).map(createNode),
+  });
+
+  return createNode("main"); //this mena smain has to exist for now
 };
 
 const DependencyGraph = () => {
-  const nodeSize = { x: 200, y: 100 };
+  const [treeData, setTreeData] = useState(null);
 
-  const renderCustomNode = ({ nodeData }) => {
-    return (
-      <g>
-        <circle r={15} fill="black" />
-        <text fill="black" strokeWidth="0.5" stroke="white" x="20" y="5">
-          {nodeData.name}
-        </text>
-      </g>
-    );
-  };
+  useEffect(() => {
+    setTreeData(transformDependencyGraph(exampleGraph));
+  }, []);
+
+  if (!treeData) return <div>Loading...</div>;
 
   return (
-    <div style={{ height: "500px", width: "600px" }}>
+    <div style={{ width: "100vh", height: "100vh" }}>
       <Tree
-        data={dependencyTree}
-        renderCustomNode={renderCustomNode}
-        nodeSize={nodeSize}
-        translate={{ x: 400, y: 50 }}
+        data={treeData}
+        orientation="vertical"
+        translate={{ x: 300, y: 200 }}
+        zoomable
+        styles={{
+          nodes: {
+            node: {
+              circle: { fill: "#88c0d0" },
+              name: { fontSize: "12px", fontWeight: "bold" },
+              attributes: { fontSize: "10px" },
+            },
+            leafNode: {
+              circle: { fill: "#8fbcbb" },
+            },
+          },
+        }}
       />
     </div>
   );

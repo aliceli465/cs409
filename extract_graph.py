@@ -1,5 +1,6 @@
 import re
 from collections import defaultdict
+import json
 
 def build_function_dependency_graph_from_file(file_name):
     """
@@ -50,9 +51,13 @@ def build_function_dependency_graph_from_file(file_name):
 
     return dict(dependency_graph)
 
-# file_name = r"C:\Users\Namea\OneDrive\Desktop\cs409\camelCaser.c"  # Replace with your file name
-# dependency_graph = build_function_dependency_graph_from_file(file_name)
-
+file_name = r"test_c_files\test.c"  # Replace with your file name
+dependency_graph = build_function_dependency_graph_from_file(file_name)
+filename = "test_graph.json"
+items = dependency_graph.items()
+data = dict(items)
+with open(filename, 'w') as json_file:
+    json.dump(data, json_file, indent=4)
 # print(dependency_graph.items())
 # # Print the dependency graph
 # print("Function Dependency Graph:")
