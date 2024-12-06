@@ -1,9 +1,17 @@
 import React, { useState, useRef } from "react";
 
-const FunctionBubble = ({ functionName, explanation, color }) => {
+const getRandomPastelColor = () => {
+  const r = Math.floor(Math.random() * 128) + 127; // Light red (127-255)
+  const g = Math.floor(Math.random() * 128) + 127; // Light green (127-255)
+  const b = Math.floor(Math.random() * 128) + 127; // Light blue (127-255)
+  return `rgb(${r}, ${g}, ${b})`;
+};
+
+const FunctionBubble = ({ functionName, explanation }) => {
   const [isOpen, setIsOpen] = useState(false);
   const bubbleRef = useRef(null);
   const [dropdownWidth, setDropdownWidth] = useState(0);
+  const randomPastelColor = getRandomPastelColor();
 
   //get bubble width
   const toggleDropdown = () => {
@@ -20,7 +28,7 @@ const FunctionBubble = ({ functionName, explanation, color }) => {
         className="function-bubble"
         onClick={toggleDropdown}
         ref={bubbleRef}
-        style={{ backgroundColor: color }}
+        style={{ backgroundColor: randomPastelColor }}
       >
         {functionName}
         {isOpen && (

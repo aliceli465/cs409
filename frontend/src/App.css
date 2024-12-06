@@ -139,3 +139,54 @@ button {
   font-size: 1rem;
   cursor: pointer;
 }
+
+.function-bubble {
+  display: inline-block;
+  padding: 12px 25px;
+  color: black;
+  border-radius: 30px;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  margin-bottom: 1%;
+  padding-left: 80px;
+  padding-right: 80px;
+}
+
+.dropdown {
+  margin-top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffffff;
+  color: #333;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  width: fit-content;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  text-align: center;
+}
+
+.dropdown.show {
+  opacity: 1;
+}
+
+.dropdown p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.dropdown::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #5c8aff;
+}
