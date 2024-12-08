@@ -242,7 +242,9 @@ const HomeComponent = () => {
 
               {activeTab === "dependencyGraph" && (
                 <div className="text-center">
-                  <DependencyGraph />
+                  <DependencyGraph 
+                    value={code}
+                  />
                 </div>
               )}
 
