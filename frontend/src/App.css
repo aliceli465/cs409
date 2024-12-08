@@ -190,3 +190,45 @@ button {
   border-right: 8px solid transparent;
   border-bottom: 8px solid #5c8aff;
 }
+
+@keyframes colorChange {
+  0% {
+    color: #ff0000;
+  }
+  33% {
+    color: #00ff00;
+  }
+  66% {
+    color: #0000ff;
+  }
+  100% {
+    color: #ff0000;
+  }
+}
+@keyframes zoomInOut {
+  0%,
+  100% {
+    transform: scale(1); /* Normal size */
+  }
+  50% {
+    transform: scale(1.2); /* Slightly zoomed in */
+  }
+}
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.loading-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  animation: zoomInOut 1.5s infinite, colorChange 3s infinite;
+}
