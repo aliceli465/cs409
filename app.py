@@ -4,6 +4,7 @@ all flask apis will go in here
 
 from flask import Flask, request, jsonify
 from extract_function import extract_functions_with_body
+from extract_graph import build_function_dependency_graph_from_file
 from flask_cors import CORS
 import openai
 import os
@@ -113,6 +114,21 @@ def upload_c_file():
         functions = extract_functions_with_body(c_code)
 
         return jsonify({"Functions": functions}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/graph-dependencies', methods=['POST'])
+def graph_dependencies():
+    try:
+        uploaded_file = request.files.get('file')
+        if not uploaded_file:
+            return jsonify({"error": "No file uploaded"}), 400
+
+        c_code = uploaded_file.read().decode('utf-8')
+
+        dependency_graph = build_function_dependency_graph_from_file(c_code)
+
+        return jsonify(dependency_graph), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

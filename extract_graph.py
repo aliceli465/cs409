@@ -2,12 +2,12 @@ import re
 from collections import defaultdict
 import json
 
-def build_function_dependency_graph_from_file(file_name):
+def build_function_dependency_graph_from_file(file_content):
     """
     Build a dependency graph of function calls in a C file.
     
     Parameters:
-        file_name (str): The name of the C file to analyze.
+        file_content (str): The content of the C file to analyze.
     
     Returns:
         dict: A dictionary representing the function dependency graph, where keys
@@ -59,8 +59,8 @@ def build_function_dependency_graph_from_file(file_name):
         # Extract and return the function body
         return file_content[start_index:end_index - 1]  # Exclude the final closing brace
 
-    with open(file_name, 'r') as file:
-        file_content = file.read()
+    # with open(file_name, 'r') as file:
+    #     file_content = file.read()
 
     # Remove comments (both single-line and multi-line)
     file_content = re.sub(r'//.*|/\*.*?\*/', '', file_content, flags=re.DOTALL)
@@ -81,7 +81,9 @@ def build_function_dependency_graph_from_file(file_name):
 
 # Example usage
 file_name = r"test_c_files/test.c"  # Replace with your file name
-dependency_graph = build_function_dependency_graph_from_file(file_name)
+with open(file_name, 'r') as file:
+    file_content = file.read()
+dependency_graph = build_function_dependency_graph_from_file(file_content)
 
 # Write the graph to a JSON file
 filename = "test_graph.json"
