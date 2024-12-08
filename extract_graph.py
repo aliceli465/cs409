@@ -80,19 +80,19 @@ def build_function_dependency_graph_from_file(file_content):
     return dict(dependency_graph)
 
 # Example usage
-file_name = r"test_c_files/test.c"  # Replace with your file name
-with open(file_name, 'r') as file:
-    file_content = file.read()
-dependency_graph = build_function_dependency_graph_from_file(file_content)
+# file_name = r"test_c_files/test.c"  # Replace with your file name
+# with open(file_name, 'r') as file:
+#     file_content = file.read()
+# dependency_graph = build_function_dependency_graph_from_file(file_content)
 
-# Write the graph to a JSON file
-filename = "test_graph.json"
-with open(filename, 'w') as json_file:
-    json.dump(dependency_graph, json_file, indent=4)
+# # Write the graph to a JSON file
+# filename = "test_graph.json"
+# with open(filename, 'w') as json_file:
+#     json.dump(dependency_graph, json_file, indent=4)
 
-# Print the dependency graph
-print("Function Dependency Graph:")
-for func, calls in dependency_graph.items():
-    print(f"{func}:")
-    for call in calls:
-        print(f"  -> {call}")
+# # Print the dependency graph
+# print("Function Dependency Graph:")
+# for func, calls in dependency_graph.items():
+#     print(f"{func}:")
+#     for call in calls:
+#         print(f"  -> {call}")
