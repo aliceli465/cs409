@@ -2,7 +2,7 @@
 all flask apis will go in here
 """
 
-from flask import Flask, request, jsonify
+from flask import Flask, jsonify, request, make_response
 from extract_function import extract_functions_with_body
 from extract_graph import build_function_dependency_graph_from_file
 from flask_cors import CORS
@@ -102,6 +102,24 @@ def extract_functions():
         return jsonify({"error": str(e)}), 500
 
 
+"""
+from flask import Flask, jsonify, request, make_response
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)  # Keep it for general setup
+
+@app.route('/upload-c-file', methods=['POST'])
+def upload_c_file():
+    response = make_response(jsonify({"message": "File uploaded successfully!"}), 200)
+    response.headers.add("Access-Control-Allow-Origin", "http://localhost:3000")
+    response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
+    response.headers.add("Access-Control-Allow-Headers", "Content-Type")
+    return response
+
+if __name__ == '__main__':
+    app.run()
+"""
 @app.route('/upload-c-file', methods=['POST'])
 def upload_c_file():
     try:
@@ -113,9 +131,18 @@ def upload_c_file():
 
         functions = extract_functions_with_body(c_code)
 
-        return jsonify({"Functions": functions}), 200
+        response = make_response(jsonify({"Functions": functions}), 200)
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
+        response.headers.add("Access-Control-Allow-Headers", "Content-Type")
+        return response
+    
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        response = make_response(jsonify({"error": str(e)}), 500)
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
+        response.headers.add("Access-Control-Allow-Headers", "Content-Type")
+        return response
 
 @app.route('/graph-dependencies', methods=['POST'])
 def graph_dependencies():
