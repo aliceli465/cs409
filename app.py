@@ -11,7 +11,7 @@ import os
 from dotenv import load_dotenv
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins="*")
 
 load_dotenv(override=True)
 print("Loaded API Key:", os.getenv("OPENAI_API_KEY"))
