@@ -8,34 +8,34 @@ import DependencyGraph from "./dependencyGraph";
 import "../App.css";
 
 //sample format for openai calls for documentaiton
-const functionNames = [
-  "initApp",
-  "handleClick",
-  "fetchData",
-  "processData",
-  "renderUI",
-];
+// const functionNames = [
+//   "initApp",
+//   "handleClick",
+//   "fetchData",
+//   "processData",
+//   "renderUI",
+// ];
 
-const explanations = [
-  "Initializes the application and sets up necessary states.",
-  "Handles the click event by calling specific handlers.",
-  "Fetches data from the API and updates the state with the response.",
-  "Processes the fetched data and prepares it for rendering.",
-  "Renders the UI by mapping over data and applying appropriate components.",
-];
+// const explanations = [
+//   "Initializes the application and sets up necessary states.",
+//   "Handles the click event by calling specific handlers.",
+//   "Fetches data from the API and updates the state with the response.",
+//   "Processes the fetched data and prepares it for rendering.",
+//   "Renders the UI by mapping over data and applying appropriate components.",
+// ];
 
-const feedback = Array(5).fill(
-  `This function works as intended but could use better error handling. Consider refactoring to reduce cyclomatic complexity.`
-);
+// const feedback = Array(5).fill(
+//   `This function works as intended but could use better error handling. Consider refactoring to reduce cyclomatic complexity.`
+// );
 
-//IMPORTANT
-//COMBINE ALL THREE
-//TO MAKE OPTIMIZATION TAB
-const combinedArray = functionNames.map((functionName, index) => ({
-  function: functionName,
-  explanation: explanations[index],
-  feedback: feedback[index],
-}));
+// //IMPORTANT
+// //COMBINE ALL THREE
+// //TO MAKE OPTIMIZATION TAB
+// const combinedArray = functionNames.map((functionName, index) => ({
+//   function: functionName,
+//   explanation: explanations[index],
+//   feedback: feedback[index],
+// }));
 
 const HomeComponent = () => {
   const navigate = useNavigate();
@@ -46,6 +46,7 @@ const HomeComponent = () => {
   const [summaries, setSummaries] = useState([]);
   const [feedbacks, setFeedbacks] = useState([]);
   const [loading, setLoading] = useState(false);
+
   const resultsRef = useRef(null);
 
   const scrollToResults = () => {
@@ -260,7 +261,7 @@ const HomeComponent = () => {
                       marginRight: "50px",
                     }}
                   >
-                    {combinedArray.map((item, index) => (
+                    {names.map((name, index) => (
                       <div
                         key={index}
                         style={{
@@ -271,9 +272,15 @@ const HomeComponent = () => {
                           backgroundColor: "#f9f9f9",
                         }}
                       >
-                        <h2 className="font-bold">{item.function}</h2>
-                        <ul>
-                          <li>{item.feedback}</li>
+                        <h2 className="font-bold">{name}</h2>
+                        <ul className="list-none p-0">
+                          {feedbacks[index]
+                            .split(/(?=🔴|🟢)/) // Split before each red or green circle
+                            .map((line, i) => (
+                              <li key={i} style={{ marginBottom: "0.5rem" }}>
+                                {line.trim()}
+                              </li>
+                            ))}
                         </ul>
                       </div>
                     ))}
