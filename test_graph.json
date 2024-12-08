@@ -4,6 +4,7 @@
     "fibonacci": [],
     "main": [
         "printf_hello",
-        "is_prime"
+        "is_prime",
+        "fibonacci"
     ]
 }

@@ -120,17 +120,20 @@ def upload_c_file():
 @app.route('/graph-dependencies', methods=['POST'])
 def graph_dependencies():
     try:
-        uploaded_file = request.files.get('file')
-        if not uploaded_file:
-            return jsonify({"error": "No file uploaded"}), 400
+        # Parse the JSON body
+        data = request.get_json()
+        if not data or 'value' not in data:
+            return jsonify({"error": "No code provided"}), 400
 
-        c_code = uploaded_file.read().decode('utf-8')
+        c_code = data['value']  # Retrieve the 'codes' field from JSON
 
+        # Process the code to build the dependency graph
         dependency_graph = build_function_dependency_graph_from_file(c_code)
 
         return jsonify(dependency_graph), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))

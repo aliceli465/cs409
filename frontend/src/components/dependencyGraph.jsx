@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Tree } from "react-d3-tree";
-import exampleGraph from "./test_graph.json";
+// import exampleGraph from "./test_graph.json";
 //example output for test.c
 //dict_items([('printf_hello', []), ('is_prime', []), ('fibonacci', []), ('main', ['printf_hello', 'is_prime'])])
 //example data in test_Graph.json
@@ -14,13 +14,39 @@ const transformDependencyGraph = (graph) => {
   return createNode("main"); //this mena smain has to exist for now
 };
 
-const DependencyGraph = () => {
+const DependencyGraph = ({ value }) => {
   const [treeData, setTreeData] = useState(null);
 
   useEffect(() => {
-    setTreeData(transformDependencyGraph(exampleGraph));
-  }, []);
+    const fetchGraph = async () => {
+      try {
+        // Send the codes content to the backend
+        const response = await fetch("http://127.0.0.1:5000/graph-dependencies", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ value }),
+        });
 
+        if (!response.ok) {
+          throw new Error("Failed to fetch dependency graph");
+        }
+
+        const data = await response.json();
+        console.log(data);
+        setTreeData(transformDependencyGraph(data));
+      } catch (error) {
+        console.error("Error fetching dependency graph:", error);
+      }
+    };
+
+    if (value) {
+      fetchGraph();
+    }
+  }, [value]);
+
+  if (!value) return <div>No code provided</div>;
   if (!treeData) return <div>Loading...</div>;
 
   return (
