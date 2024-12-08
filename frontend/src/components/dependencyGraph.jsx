@@ -21,13 +21,16 @@ const DependencyGraph = ({ value }) => {
     const fetchGraph = async () => {
       try {
         // Send the codes content to the backend
-        const response = await fetch("http://127.0.0.1:5000/graph-dependencies", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ value }),
-        });
+        const response = await fetch(
+          "https://cs409-flask.vercel.app//graph-dependencies",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ value }),
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Failed to fetch dependency graph");

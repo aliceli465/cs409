@@ -78,10 +78,13 @@ const HomeComponent = () => {
 
       //call to routes
       try {
-        const response = await fetch("http://127.0.0.1:5000/upload-c-file", {
-          method: "POST",
-          body: formData,
-        });
+        const response = await fetch(
+          "https://cs409-flask.vercel.app//upload-c-file",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
 
         if (!response.ok) {
           const errorData = await response.json();
@@ -98,7 +101,7 @@ const HomeComponent = () => {
 
           //make call to /get-summaries
           const summariesResponse = await fetch(
-            "http://127.0.0.1:5000/get-summaries",
+            "https://cs409-flask.vercel.app//get-summaries",
             {
               method: "POST",
               headers: {
@@ -121,7 +124,7 @@ const HomeComponent = () => {
 
           //make call to /get-feedback
           const feedbackResponse = await fetch(
-            "http://127.0.0.1:5000/get-feedback",
+            "https://cs409-flask.vercel.app//get-feedback",
             {
               method: "POST",
               headers: {
@@ -242,9 +245,7 @@ const HomeComponent = () => {
 
               {activeTab === "dependencyGraph" && (
                 <div className="text-center">
-                  <DependencyGraph 
-                    value={code}
-                  />
+                  <DependencyGraph value={code} />
                 </div>
               )}
 
