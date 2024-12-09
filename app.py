@@ -11,7 +11,9 @@ import os
 from dotenv import load_dotenv
 
 app = Flask(__name__)
-CORS(app, origins=["https://cs409-frontend.vercel.app/", "http://localhost:3000"])
+CORS(app)
+# app.config['CORS_HEADERS'] = 'Content-Type'
+# CORS(app, origins=["https://cs409-frontend.vercel.app/", "http://localhost:3000"])
 
 load_dotenv(override=True)
 print("Loaded API Key:", os.getenv("OPENAI_API_KEY"))
