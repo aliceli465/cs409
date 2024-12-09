@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { getAuth } from "firebase/auth";
 import Editor from "@monaco-editor/react";
 import FunctionBubble from "./FunctionBubble";
 import DependencyGraph from "./dependencyGraph";
@@ -37,6 +37,18 @@ import "../App.css";
 //   feedback: feedback[index],
 // }));
 
+const getCurrentUserEmail = () => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  if (user) {
+    return user.email;
+  } else {
+    console.error("No user is currently logged in.");
+    return null;
+  }
+};
+
 const HomeComponent = () => {
   const navigate = useNavigate();
   const [code, setCode] = useState(""); // State to store the code from the uploaded file
@@ -67,9 +79,46 @@ const HomeComponent = () => {
       const formData = new FormData();
       formData.append("file", file);
       const reader = new FileReader();
-      reader.onload = (e) => {
+      //mongoDB routes
+      reader.onload = async (e) => {
+        const fileName = file.name;
         setCode(e.target.result);
+        const randomScore = Math.floor(Math.random() * 101);
+        const optimizationHistoryRecord = {
+          fileName: fileName,
+          code: e.target.result, //body
+          score: randomScore,
+          date: new Date().toISOString(),
+        };
+
+        //call PUT from mongo route
+        try {
+          const userEmail = getCurrentUserEmail(); // Replace with the actual user's email
+          const response = await fetch(
+            `https://cs409-express.vercel.app/api/users/${userEmail}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                username: userEmail, // Required for creating a new user
+                optimizationHistory: [optimizationHistoryRecord],
+              }),
+            }
+          );
+
+          if (response.ok) {
+            const updatedUser = await response.json();
+            console.log("User updated successfully:", updatedUser);
+          } else {
+            console.error("Failed to update user:", await response.json());
+          }
+        } catch (error) {
+          console.error("Error during user update:", error);
+        }
       };
+
       reader.readAsText(file);
       setResults(true);
 
