@@ -6,10 +6,35 @@ import { useNavigate } from "react-router-dom";
 const Profile = () => {
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [opHistory, setOpHistory] = useState([]);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!userDetails) {
+      //may not have fully loaded, if not fully loaded, don't do tanythign
+      return;
+    }
+
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(
+          `https://cs409-express.vercel.app/api/users/${userDetails.email}`
+        );
+        const data = await response.json();
+        console.log("response from /get", data);
+        if (data.optimizationHistory) {
+          setOpHistory(data.optimizationHistory);
+        }
+      } catch (err) {
+        console.error("Error fetching user data:", err);
+      }
+    };
+
+    fetchUserData();
+  }, [userDetails]);
+
   const goBack = () => {
-    navigate("/home"); // Navigate to the login page
+    navigate("/home");
   };
 
   const fetchUserData = async () => {
@@ -75,18 +100,28 @@ const Profile = () => {
               </button>
             </div>
             <h1>Upload History</h1>
+
             <div className="parent-container">
               <div className="text-box-container">
-                <div className="text-box">file1.c</div>
-                <div className="text-box">file2.c</div>
-                <div className="text-box">file3.c</div>
-                <div className="text-box">file4.c</div>
+                {opHistory.map((historyItem, index) => (
+                  <div key={index} className="text-box">
+                    {historyItem.fileName}
+                  </div>
+                ))}
               </div>
               <div className="text-box-container2">
-                <div className="text-box2">Score: 1/10</div>
-                <div className="text-box2">Score: 5/10</div>
-                <div className="text-box2">Score: 7/10</div>
-                <div className="text-box2">Score: 2/10</div>
+                {opHistory.map((historyItem, index) => (
+                  <div key={index} className="text-box2">
+                    {new Date(historyItem.date).toLocaleDateString()}{" "}
+                  </div>
+                ))}
+              </div>
+              <div className="text-box-container2">
+                {opHistory.map((historyItem, index) => (
+                  <div key={index} className="text-box2">
+                    Score: {historyItem.score}/100
+                  </div>
+                ))}
               </div>
             </div>
           </div>
