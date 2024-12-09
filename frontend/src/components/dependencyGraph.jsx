@@ -22,7 +22,7 @@ const DependencyGraph = ({ value }) => {
       try {
         // Send the codes content to the backend
         const response = await fetch(
-          "https://cs409-flask.vercel.app//graph-dependencies",
+          "https://cs409-flask.vercel.app/graph-dependencies",
           {
             method: "POST",
             headers: {

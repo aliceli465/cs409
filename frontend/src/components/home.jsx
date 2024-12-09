@@ -79,7 +79,7 @@ const HomeComponent = () => {
       //call to routes
       try {
         const response = await fetch(
-          "https://cs409-flask.vercel.app//upload-c-file",
+          "https://cs409-flask.vercel.app/upload-c-file",
           {
             method: "POST",
             body: formData,
@@ -101,7 +101,7 @@ const HomeComponent = () => {
 
           //make call to /get-summaries
           const summariesResponse = await fetch(
-            "https://cs409-flask.vercel.app//get-summaries",
+            "https://cs409-flask.vercel.app/get-summaries",
             {
               method: "POST",
               headers: {
@@ -124,7 +124,7 @@ const HomeComponent = () => {
 
           //make call to /get-feedback
           const feedbackResponse = await fetch(
-            "https://cs409-flask.vercel.app//get-feedback",
+            "https://cs409-flask.vercel.app/get-feedback",
             {
               method: "POST",
               headers: {

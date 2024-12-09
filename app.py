@@ -21,7 +21,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 @app.route('/')
 def home():
-    return "hello world"
+    return "cs409 flask hehe"
 
 #input is "Functions":[]
 #{"Body": ...., "Header": ...}
