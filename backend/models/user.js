@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 // Define the Optimization History schema
 const OptimizationHistorySchema = new mongoose.Schema({
-  fileName: { type: String, required: true }, // Name of the file
-  code: { type: String, required: true },    // The optimized code
-  score: { type: Number, required: true },   // Optimization score
+  fileName: { type: String}, // Name of the file
+  code: { type: String},    // The optimized code
+  score: { type: Number},   // Optimization score
   date: { type: Date, default: Date.now }    // Timestamp of the optimization
-});
+},{ _id: false });
 
 // Define the User schema
 const UserSchema = new mongoose.Schema({
